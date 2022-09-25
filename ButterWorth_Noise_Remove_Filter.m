@@ -6,9 +6,9 @@ close all;
 %pkg load signal
 #... To install butter function in octave
 
-f=10;
-fs = 500;
-t = [0:1/fs:1]; % 0 to 1 sec, sampling time Ts = 1/Fs
+f=7;
+fs = 200;
+t = 0:1/fs:1; % 0 to 1 sec, sampling time Ts = 1/Fs
 signal = sin(2*pi*f*t);
 subplot(4,1,1);
 plot(t,signal);
@@ -20,7 +20,7 @@ title('Noise signal');
 
 #..FFT
 
-fftPoint = 2*nextpow2(length(noisySignal));
+fftPoint = 2^nextpow2(length(noisySignal));
 freDomain = abs(fft(noisySignal, fftPoint)); %signal in frequency domain
 nFft = 0: fftPoint - 1;
 subplot(4,1,3);
