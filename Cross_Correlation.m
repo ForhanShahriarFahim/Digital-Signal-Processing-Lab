@@ -1,35 +1,38 @@
-clc;clear all; close all;
-%Get the inputs
-x = input('enter the input sequence of a signal x(n)');
-n1 = input('enter the time sample range:');
-h = input('enter the second sequence of a signal h(n)');
-n2 = input('enter the time sample range:');
-n2 = -fliplr(n2);
-h = fliplr(h);
-%Find the length of a signal
-L1 = length(x);
-L2 = length(h);
-%Find the length of y(n)
-N = L1+L2-1;
-%Zero padding to make the length = N
-x = [x, zeros(1,N-L1)];
-h = [h, zeros(1, N-L2)];
-%Initialize the output with zero
-y = zeros(1,N);
-%Perform the linear convulation
+fs = 64;
+tsamp = 0 : 1/fs : 1;
+x = sin(2 * pi * 5 * tsamp);
+fs2 = 64;
+tsamp2 = 0 : 1/fs2 : 1;
+y1 = sin(2 * pi * 5 * tsamp2);
+y2 = fliplr(y1);
+%y = xcorr(x, y1);
 
- for n=1:N
-  for k=1:n
-    y(n) = y(n) + x(k)*h(n-k+1)
-  endfor
- endfor
- disp(y);
- %plot the inputs and outputs
- nL = min(n1)+min(n2);
- nH = max(n1) + max(n2);
- t = nL:1:nH;
- stem(t,y);
- grid on;
+n1 = length(x);
+n2 = length(y2);
+
+X = [x, zeros(1, n2)];
+Y = [y2, zeros(1, n1)];
+
+y = zeros(1, n1+n2-1);
+
+for i = 1:n1+n2-1
+    for j = 1:n1
+        if(i-j+1>0)
+            y(i) = y(i) + X(j)*Y(i-j+1);
+        else
+        end
+    end
+end
 
 
+subplot(2, 1, 1);
+stem(x);
+xlabel('a');
+ylabel('Input sequence');
 
+nx = -(length(y1)-1):(length(x)-1);
+
+subplot(2, 1, 2);
+stem(nx, y);
+xlabel('b');
+ylabel('Output Sequence');

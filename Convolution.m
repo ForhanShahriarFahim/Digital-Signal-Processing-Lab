@@ -1,7 +1,9 @@
 clc;clear all; close all;
 %Get the inputs
-x = input('enter the input sequence of a signal x(n)');
-h = input('enter the input sequence of a signal h(n)');
+#x = input('enter the input sequence of a signal x(n)');
+#h = input('enter the input sequence of a signal h(n)');
+ x = [1,2,3,1];
+ h = [1,2,1,-1];
 
 %Find the length of a signal
 n1 = length(x);
@@ -20,15 +22,16 @@ y = zeros(1,N);
     y(n) = y(n) + x(k)*h(n-k+1)
   endfor
  endfor
- disp(y);
+
  %plot the inputs and outputs
- ny = 0:N-1
- subplot(3,1,1);
-  stem(ny,x); xlabel('n--->'); ylabel('x(n)--->'); title('First sequence');
 
-  subplot(3,1,2);
-  stem(ny,h); xlabel('n--->'); ylabel('h(n)--->'); title('Second sequence');
-
-  subplot(3,1,3);
-  stem(ny,y); xlabel('n--->'); ylabel('y(n)--->'); title('Convoluted signal');
-
+ z1 = 2; #... 0th index of x
+ z2 = 3; #... 0th index of h
+ index = (z1+z2-1); #... 0th index of ans
+ t = -(index-1):length(y)-index; #... time(n)
+  disp(y);
+#stem(n, y, ".");
+ %From Lowest Point of h(n) or x(n) to LowestPoint+ConvolutionSize
+ % -1,0,1,2,3,4,5 (Total Point = ConvSize = 7)
+ stem(t,y,'.','LineWidth',2);
+#axis([0,size+5,min(output)-5,max(output)+5])
