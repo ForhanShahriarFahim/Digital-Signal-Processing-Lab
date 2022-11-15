@@ -57,21 +57,29 @@ input_signal = sin(2*pi*1500*nx) + 0.5*sin(2*pi*1785*nx + 3*pi/4);
 %Perform 8 point DFT
 len = 8;
 n = 0:len-1;
-% subplot(2, 2, 2);
-% plot(n, input_signal(1:len));
+ subplot(2, 2,1);
+ plot(n, input_signal(1:len));
+ title('Input Signal');
 
 
 y = calculate_dft(input_signal, -1, len, 1);
-subplot(2, 2, 1)
-stem(n, abs(y));
+#subplot(2, 2, 1)
+#stem(n, abs(y));
+#title('Magnitude spectrum');
 
 subplot(2, 2, 2);
 real_part = real(y);
 stem(n, real_part);
+title('Real Part');
 
 subplot(2, 2, 3);
 stem(n, imag(y));
+title('Imaginary Part');
 
+subplot(2,2,4);
+plot(n,angle(y));
+axis tight;
+title("Angle spectrum");
 
 % dft_output = zeros(1, len);
 % for j=1:len
@@ -93,3 +101,4 @@ stem(n, imag(y));
 inverse_dft = calculate_dft(y, 1, len, len);
 subplot(2, 2, 4)
 plot(n, inverse_dft);
+title('IDFT');

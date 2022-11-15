@@ -1,30 +1,78 @@
-n = 0:1/80:1;
-h = 5*sin(2*pi*4*n);
-x = 7*sin(2*pi*3*n);
+clc; #... Clear command line
+clear all; #... Clear variables
+close all; #... Clear figures
 
-#h = [1 2 1 -1]; % h(0) = 2
+#... Discrete Fourier Transform
 
-#x = [1 2 3 1]; % x(0) = 1;
+xInput = [1 2 3 4 5 6 7]
+nPoint = length(xInput); #... How many point dft
+n = 0:nPoint-1 #... Time(n)
+xLength = length(xInput);
+subplot(3,2,1);
+stem(n, xInput, ".");
 
-X = [x, zeros(1, length(h))];
-H = [h, zeros(1, length(x))];
-N = length(x)+length(h)-1;
-y = zeros(1, N);
+if(nPoint < xLength)
+  error("Can not perform dft. Point should be >= length");
+endif
 
-for i=1:N
-    for j=1:length(x)
-        if(i-j+1>0)
-            y(i) = y(i)+X(j)*H(i-j+1);
-        end
-    end
-end
+xInput = [xInput zeros(1,nPoint-xLength)];
 
-nx = -1:5; % output range -1, 0, 1, 2, 3, 4, 5
-z1 = 2; #... 0th index of x
-z2 = 3; #... 0th index of h
-index = (z1+z2-1); #... 0th index of ans
-n = -(index-1):length(y)-index; #... time(n)
-plot(n, y);
-%xlim([-1, 7]);
+for k = 0:nPoint-1
+  xD(k+1) = 0;
+  for n = 0:nPoint-1
+    xD(k+1) = xD(k+1)+xInput(n+1)*exp(-i*2*pi*k*n/nPoint);
+  endfor
+endfor
 
+#... Ploting magnitude
+n = 0:nPoint-1;
+subplot(3,2,2);
+plot(n, abs(xD));
+axis tight;
+title("Magnitude spectrum");
+
+#... Ploting phase
+n = 0:nPoint-1
+subplot(3,2,3);
+plot(n, angle(xD));
+axis tight;
+title("phase spectrum");
+
+#... Inverse Discrete Fourier Transform
+
+for k = 0:nPoint-1
+  xInv(k+1) = 0;
+  for n = 0:nPoint-1
+    xInv(k+1) = xInv(k+1)+xD(n+1)*exp(i*2*pi*n*k/nPoint);
+  endfor
+  xInv(k+1) = xInv(k+1)/nPoint;
+endfor
+
+#... Ploting Inverse DFT
+n = 0:nPoint-1
+subplot(3,2,4);
+stem(n, xInv, ".");
+axis tight;
+title("IDFT");
+
+#... Time shifting property
+m = 2;
+for k = 0:nPoint-1
+  xD(k+1) = xD(k+1)*exp(i*2*pi*k*m/nPoint);
+endfor
+
+for k = 0:nPoint-1
+  xInv(k+1) = 0;
+  for n = 0:nPoint-1
+    xInv(k+1) = xInv(k+1)+xD(n+1)*exp(i*2*pi*n*k/nPoint);
+  endfor
+  xInv(k+1) = xInv(k+1)/nPoint;
+endfor
+
+#... Ploting shifted Inverse DFT
+n = 0:nPoint-1
+subplot(3,2,5);
+stem(n, xInv, ".");
+axis tight;
+title("Shifter IDFT");
 

@@ -2,8 +2,8 @@ clc;
 clear all;
 close all;
 
-%pkg install -forge signal
-%pkg load signal
+pkg install -forge signal
+pkg load signal
 #... To install butter function in octave
 
 f=7;
