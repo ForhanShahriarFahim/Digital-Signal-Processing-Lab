@@ -4,6 +4,8 @@ x = sin(2 * pi * 5 * tsamp);
 fs2 = 64;
 tsamp2 = 0 : 1/fs2 : 1;
 y1 = sin(2 * pi * 5 * tsamp2);
+#x = [1 1 2 2];
+#y1 = [1 3 1];
 y2 = fliplr(y1);
 %y = xcorr(x, y1);
 
@@ -33,6 +35,6 @@ ylabel('Input sequence');
 nx = -(length(y1)-1):(length(x)-1);
 
 subplot(2, 1, 2);
-stem(nx, y);
+stem(nx, y,'LineWidth',2);
 xlabel('b');
 ylabel('Output Sequence');

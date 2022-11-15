@@ -1,32 +1,38 @@
-clc;clear all; close all;
-%Get the inputs
-x = input('enter the input sequence of a signal x(n)');
-n1 = input('enter the time sample range:');
-h = fliplr(x);
-%Find the length of a signal
-L1 = length(x);
-n2 = -fliplr(n1)
-%Find the length of y(n)
-N = L1+L1-1;
-%Zero padding to make the length = N
-x = [x, zeros(1,N-L1)];
-h = [h, zeros(1, N-L1)];
-%Initialize the output with zero
-y = zeros(1,N);
-%Perform the linear convulation
+clc; #... Clear command line
+clear all; #... Clear variables
+close all; #... Clear figures
 
- for n=1:N
-  for k=1:n
-    y(n) = y(n) + x(k)*h(n-k+1)
-  endfor
- endfor
- disp(y);
- %plot the inputs and outputs
- nL = min(n1)+min(n2);
- nH = max(n1) + max(n2);
- t = nL:1:nH;
- stem(t,y);
- grid on;
+#fs = 64;
+#tsamp = 0 : 1/fs : 1;
+#x = sin(2 * pi * 5 * tsamp);
+
+x = [1 2 1 1];
+x1 = fliplr(x);
+
+n = length(x);
+X = [x, zeros(1, n)];
+flip_x = [x1, zeros(1, n)];
+y = zeros(1, 2*n-1);
+
+for i = 1:2*n-1
+    %y(i) = 0;
+    for j = 1:n
+        if(i-j+1 > 0)
+            y(i)=y(i)+X(j)*flip_x(i-j+1);
+        else
+        end
+    end
+end
 
 
+subplot(2, 1, 1);
+stem(x);
+xlabel('a');
+ylabel('Input sequence');
 
+nx = -(length(x)-1):(length(x)-1);
+
+subplot(2, 1, 2);
+stem(nx, y,'LineWidth',2);
+xlabel('lag');
+ylabel('Output Sequence');
