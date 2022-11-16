@@ -1,11 +1,15 @@
-fs = 64;
-tsamp = 0 : 1/fs : 1;
-x = sin(2 * pi * 5 * tsamp);
-fs2 = 64;
-tsamp2 = 0 : 1/fs2 : 1;
-y1 = sin(2 * pi * 5 * tsamp2);
-#x = [1 1 2 2];
-#y1 = [1 3 1];
+clc; #... Clear command line
+clear all; #... Clear variables
+close all; #... Clear figures
+
+#fs = 64;
+#tsamp = 0 : 1/fs : 1;
+#x = sin(2 * pi * 5 * tsamp);
+#fs2 = 64;
+#tsamp2 = 0 : 1/fs2 : 1;
+#y1 = sin(2 * pi * 5 * tsamp2);
+x = [1 1 2 2];
+y1 = [1 3 1];
 y2 = fliplr(y1);
 %y = xcorr(x, y1);
 

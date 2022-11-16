@@ -52,7 +52,7 @@
 
 Fs = 8000;
 nx = 0:1/Fs:1;
-input_signal = sin(2*pi*1500*nx) + 0.5*sin(2*pi*1785*nx + 3*pi/4);
+input_signal = [2 3 4 2 1 4 5];
 
 %Perform 8 point DFT
 len = 8;

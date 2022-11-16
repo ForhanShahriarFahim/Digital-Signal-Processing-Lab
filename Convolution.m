@@ -32,8 +32,8 @@ end
 
  %plot the inputs and outputs
 
- z1 = 2; #... 0th index of x
- z2 = 3; #... 0th index of h
+ z1 = 1; #... 0th index of x
+ z2 = 1; #... 0th index of h
  index = (z1+z2-1); #... 0th index of ans
  t = -(index-1):length(y)-index; #... time(n)
   #disp(y);

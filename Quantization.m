@@ -28,10 +28,10 @@ xlabel("Time(n)");
 ylabel("Amplitude");
 
 #... Quantization
-bit = 3; #... Number of bitset
+bit = 4; #... Number of bitset
 aMin = min(sampledSignal); #... Minimum amplitude
 aMax = max(sampledSignal); #... Maximum amplitude
-step = (aMax-aMin)/(2^bit); #... Step size
+step = (aMax-aMin)/2^(bit - 1) - 1;; #... Step size
 quantizedSignal = round(sampledSignal/step)*step;
 subplot(3,1,3);
 plot(n, quantizedSignal);

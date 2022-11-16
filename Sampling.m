@@ -39,5 +39,7 @@ fs = 7*f; #... Sampling frequency
 n = 0:1/fs:1; #... Sampled time
 sampledSignal = a*sin(2*pi*f*n);
 subplot(2,2,4);
+hold on;
 stem(n, sampledSignal, ".");
+plot(n,sampledSignal);
 title("Over samplin");

@@ -11,7 +11,7 @@ title('check DFT symmetry property');
 
 %shifting property, 2 unit advance
 
-shift  = 2;
+shift  = -2;
 output_dft_shift = zeros(1, len);
 for i=1:len
     output_dft_shift(i) = exp(-1*j*2*pi*shift*i/len)*output_dft(i);

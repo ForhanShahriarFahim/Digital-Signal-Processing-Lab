@@ -1,40 +1,43 @@
-clc; #... Clear command line
-clear all; #... Clear variables
-close all; #... Clear figures
-
+clc;clear all; close all;
+##Get the inputs
+#x = input('enter the input sequence of a signal x(n)');
+#h = input('enter the input sequence of a signal h(n)');
 n = 0:1/80:1;
 h = 5*sin(2*pi*4*n);
 x = 7*sin(2*pi*3*n);
+%Find the length of a signal
 
-z = []; #... To store values of x*h
-for i = 1:length(x)
-  xh = h.*x(i); #... Multiply x(i) with all values of h
-  z = [z; xh]; #... Store xh in the next row of z
-endfor
+%Find the length of y(n)
 
-[r c] = size(z); #... Row & column of z
-startSum = 2; #... To determines the terms of first value
-lastSum = r+c; #... To determines last value
-ans = []; #... Convolution result will be stored here
+%Zero padding to make the length = N
+X = [x, zeros(1, length(h))];
 
-while (startSum <= lastSum)
-  sum = 0;
-  for i = 1:r
-    for j = 1:c
-      if ((i+j)==startSum)
-        sum = sum+z(i,j);
-      endif
-    endfor
-  endfor
-  startSum = startSum+1; #... For next value
-  ans = [ans sum]; #... Store sum in the back of ans
+H = [h, zeros(1, length(x))];
+
+N = length(x)+length(h)-1;
+%Initialize the output with zero
+y = zeros(1,N);
+%Perform the linear convulation
+
+y = zeros(1, N);
+
+for i=1:N
+    for j=1:length(x)
+        if(i-j+1>0)
+            y(i) = y(i)+X(j)*H(i-j+1);
+        end
+    end
 end
 
-z1 = 2; #... 0th index of x
-z2 = 3; #... 0th index of h
-index = (z1+z2-1); #... 0th index of ans
-n = -(index-1):length(ans)-index; #... time(n)
 
-disp(ans);
-stem(n,ans,'.');
-plot(n, ans);
+ %plot the inputs and outputs
+
+ z1 = 2; #... 0th index of x
+ z2 = 3; #... 0th index of h
+ index = (z1+z2-1); #... 0th index of ans
+ t = -(index-1):length(y)-index; #... time(n)
+  #disp(y);
+#stem(n, y, ".",','LineWidth',2);
+
+ plot(t,y);
+#axis([0,size+5,min(output)-5,max(output)+5])
